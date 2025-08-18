@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IterNubis", "src\IterNubis.csproj", "{AF18F28F-558A-421C-A985-9EBEE1A70F3E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B940D227-969C-428C-BDD8-20AF396470D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IterNubis", "src\IterNubis\IterNubis.csproj", "{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +16,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF18F28F-558A-421C-A985-9EBEE1A70F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF18F28F-558A-421C-A985-9EBEE1A70F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF18F28F-558A-421C-A985-9EBEE1A70F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF18F28F-558A-421C-A985-9EBEE1A70F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5AC5DA0-BB1B-4AAC-BE6A-E47F648188FB} = {B940D227-969C-428C-BDD8-20AF396470D0}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,8 @@
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 env:
-  PUBLISH_DIR: src/bin/Release/net9.0/publish/wwwroot
+  PUBLISH_DIR: src/IterNubis/bin/Release/net9.0/publish/wwwroot
+  PROJECT_PATH: src/IterNubis/IterNubis.csproj
 
 on:
   # Runs on pushes targeting the default branch
@@ -42,7 +43,7 @@ jobs:
 
       # publishes Blazor project to the release folder
       - name: Publish .NET Project
-        run: dotnet publish src/IterNubis.csproj -c Release
+        run: dotnet publish ${{ env.PROJECT_PATH }} -c Release
 
       # changes the base-tag in index.html from '/' to 'BlazorGitHubPagesDemo' to match GitHub Pages repository subdirectory
       - name: Change base-tag in index.html from / to iter-nubis
@@ -55,10 +56,10 @@ jobs:
       # add .nojekyll file to tell GitHub pages to not treat this as a Jekyll project. (Allow files and folders starting with an underscore)
       - name: Add .nojekyll file
         run: touch .nojekyll
-        
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5.0.0
-        
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4.0.0
         with:
