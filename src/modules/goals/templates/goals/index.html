@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Goals {% endblock %}
+
+{% block content %}
+<h1> Goals</h1>
+{% if goal_list %}
+<ul>
+    {% for goal in goal_list %}
+    <li>{{ goal }}</a></li>
+    {% endfor %}
+</ul>
+
+{% else %}
+<p>You have no goals.</p>
+{% endif %}
+{% endblock %}

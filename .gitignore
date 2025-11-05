@@ -1,3 +1,14 @@
+#  Custom ignores for Iter Nubis project
+src/iternubis/settings/dev.py
+src/iternubis/settings/test.py
+src/iternubis/settings/prod.py
+
+### Python ###
+
+# Python.gitignore
+# Created by https://www.toptal.com/developers/gitignore/api/python
+# Edit at https://www.toptal.com/developers/gitignore?templates=python
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
