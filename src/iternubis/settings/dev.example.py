@@ -24,3 +24,14 @@ DATABASES = {"default": env.db()}
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = "staticfiles"
+
+# Internationalization
+# https://docs.djangoproject.com/en/5.2/topics/i18n/
+
+LANGUAGE_CODE = env("LANGUAGE_CODE", default="en-us")
+
+TIME_ZONE = env("TIME_ZONE", default="UTC")
+
+USE_I18N = True
+
+USE_TZ = True
