@@ -23,9 +23,7 @@ class GoalCommon(models.Model):
 
 
 class Goal(GoalCommon):
-    certification = models.OneToOneField(
-        Certification, on_delete=models.CASCADE, null=True, blank=True
-    )
+    certification = models.ForeignKey(Certification, on_delete=models.CASCADE, null=True, blank=True)
     PRIORITY_CHOICES = [
         (1, "Critical"),
         (2, "High"),

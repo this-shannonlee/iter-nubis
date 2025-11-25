@@ -1,38 +1,27 @@
 from django.db import models
-from modules.home.models import Tag
 from multiselectfield import MultiSelectField
 
+from modules.home.models import Tag
 
-class ExamDomainObjective(models.Model):
-    title = models.CharField(max_length=200)
+
+class Certification(models.Model):
+    name = models.CharField(max_length=200, unique=True)
     description = models.TextField(blank=True)
+    url = models.URLField(blank=True)
+    prerequisites = models.ManyToManyField(
+        "self",
+        symmetrical=False,
+        blank=True,
+        help_text="Certifications that are prerequisites for this certification.",
+    )
+    renewal_period_years = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
-
-class ExamDomain(models.Model):
-    title = models.CharField(max_length=200, unique=True)
-    description = models.TextField(blank=True)
-    min_weight_percentage = models.DecimalField(
-        max_digits=3,
-        decimal_places=0,
-        blank=True,
-        null=True,
-        help_text="Minimum weight percentage for this domain.",
-    )
-    max_weight_percentage = models.DecimalField(
-        max_digits=3,
-        decimal_places=0,
-        blank=True,
-        null=True,
-        help_text="Maximum weight percentage for this domain.",
-    )
-
-    def __str__(self):
-        return self.title
+        return self.name
 
 
 class Exam(models.Model):
+    certification = models.ForeignKey(Certification, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     code = models.CharField(max_length=50)
     version = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
@@ -48,6 +37,7 @@ class Exam(models.Model):
     question_count = models.IntegerField(null=True, blank=True)
     QUESTION_FORMAT_CHOICES = [
         ("MC", "Multiple Choice"),
+        ("MS", "Multiple Select"),
         ("TF", "True/False"),
         ("FILL", "Fill in the Blank"),
         ("ORDER", "Ordering"),
@@ -71,19 +61,42 @@ class Exam(models.Model):
         max_digits=6, decimal_places=2, null=True, blank=True
     )
     is_pass_fail = models.BooleanField("Pass/Fail", default=False)
-    domains = models.ManyToManyField(ExamDomain, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return f"{self.title} [{self.code}]"
 
 
-class Certification(models.Model):
-    name = models.CharField(max_length=200, unique=True)
+class ExamDomain(models.Model):
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, unique=True)
     description = models.TextField(blank=True)
-    url = models.URLField(blank=True)
-    prerequisites = models.ManyToManyField("self"), blank=True, symmetrical=False
-    renewal_period_years = models.IntegerField(null=True, blank=True)
-    exams = models.ForeignKey(Exam, on_delete=models.CASCADE, null=True, blank=True)
+    min_weight_percentage = models.DecimalField(
+        max_digits=3,
+        decimal_places=0,
+        blank=True,
+        null=True,
+        help_text="Minimum weight percentage for this domain.",
+    )
+    max_weight_percentage = models.DecimalField(
+        max_digits=3,
+        decimal_places=0,
+        blank=True,
+        null=True,
+        help_text="Maximum weight percentage for this domain.",
+    )
+
     def __str__(self):
-        return self.name
+        name = f"{self.exam} | {self.title} >> {self.min_weight_percentage}%"
+        if self.max_weight_percentage:
+            name = name + f" - {self.max_weight_percentage}%)"
+        return name
+
+
+class ExamDomainObjective(models.Model):
+    domain = models.ForeignKey(ExamDomain, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"[{self.domain.exam.code}] {self.domain.title} | {self.title}"

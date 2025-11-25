@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block title %} Certifications {% endblock %}
+{%block content %}
+<h1>{{ certification.name }}</h1>
+<p>{{ certification.description }}</p>
+<p>
+  {% if certification.url %}
+  <a href="{{ certification.url }}" target="_blank">{{ certification.url }}</a>
+  {% endif %}
+</p>
+<h2>Prerequisites</h2>
+{% if certification.prerequisites.all %}
+<ul>
+  {% for prereq in certification.prerequisites.all %}
+  <li>{{ prereq.name }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No prerequisites listed.</p>
+{% endif %}
+
+<h2>Exams</h2>
+{% if certification.exam_set.all %}
+<ul>
+  {% for exam in certification.exam_set.all %}
+  <li>{{ exam.code }} - {{ exam.title }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No exams listed.</p>
+{% endif %} {% endblock %}
